@@ -3,12 +3,22 @@ extends CharacterBody2D
 
 const SPEED = 300.0
 var last_direction: Vector2 = Vector2.RIGHT
+var is_attaking: bool = false
+
 
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var katana_sound: AudioStreamPlayer2D = $katana_sound
+
 
 
 func _physics_process(_delta: float) -> void:
+	if Input.is_action_just_pressed("attak") and not is_attaking:
+		attak()
+	if is_attaking:
+		velocity=Vector2.ZERO
+		return
+	
 	process_movement()
 	process_animation()
 	move_and_slide()
@@ -24,6 +34,10 @@ func process_movement()-> void:
 	
 	
 func process_animation() -> void:
+	if is_attaking:
+		return
+		
+	
 	if velocity != Vector2.ZERO:
 		play_animation("walk", last_direction)
 	else:
@@ -38,3 +52,13 @@ func play_animation(prefix: String, dir: Vector2) -> void:
 		animated_sprite_2d.play(prefix + "_down")
 	elif dir.x < 0:
 		animated_sprite_2d.play(prefix + "_left")
+		
+func attak() -> void:
+	is_attaking = true
+	katana_sound.play()  
+	play_animation("attak", last_direction)
+
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if is_attaking:
+		is_attaking = false
