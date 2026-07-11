@@ -22,6 +22,8 @@ func _ready() -> void:
 		animated_sprite_2d.animation_finished.connect(_on_player_animation_finished)
 
 func _physics_process(_delta: float) -> void:
+	
+	hitbox.monitoring = false
 	if Input.is_action_just_pressed("attak") and not is_attaking:
 		attak()
 	if is_attaking:
@@ -34,7 +36,6 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 func process_movement()-> void:
-	
 	var direction := Input.get_vector("left", "right", "up" ,"down")
 	if direction != Vector2.ZERO:
 		velocity = direction * SPEED
@@ -71,6 +72,7 @@ func play_animation(prefix: String, dir: Vector2) -> void:
 		
 func attak() -> void:
 	is_attaking = true
+	hitbox.monitoring = true
 	katana_sound.play()  
 	play_animation('attak', last_direction)
 	
@@ -92,3 +94,9 @@ func _on_player_animation_finished() -> void:
 		if katana:
 			katana.visible = false 
 	
+
+
+func _on_hitbox_body_entered(body: CharacterBody2D) -> void:
+	if is_attaking and body.name == 'slime':
+		print(body.name)
+		print("hit")

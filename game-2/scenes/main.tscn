@@ -1,8 +1,13 @@
 [gd_scene format=3 uid="uid://c6gom555qyb0j"]
 
 [ext_resource type="PackedScene" uid="uid://bg8k010xrcs2x" path="res://scenes/player.tscn" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://bjs2lu3xfsv2a" path="res://scenes/slime.tscn" id="2_0wfyh"]
 
 [node name="main" type="Node2D" unique_id=838742788]
 
 [node name="player" parent="." unique_id=1413294774 instance=ExtResource("1_o5qli")]
 position = Vector2(205, 164)
+collision_mask = 1
+
+[node name="slime" parent="." unique_id=777005425 instance=ExtResource("2_0wfyh")]
+position = Vector2(409, 171)

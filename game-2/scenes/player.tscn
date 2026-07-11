@@ -666,6 +666,9 @@ animations = [{
 "speed": 6.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ur7pv"]
+size = Vector2(67.5, 35)
+
 [sub_resource type="Animation" id="Animation_ujl30"]
 length = 0.001
 tracks/0/type = "value"
@@ -790,7 +793,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-57.84, 24.59)]
+"values": [Vector2(-18.475, 47.695)]
 }
 
 [sub_resource type="Animation" id="Animation_31cv2"]
@@ -854,7 +857,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(53.29, 4.87)]
 }
 
 [sub_resource type="Animation" id="Animation_smehm"]
@@ -915,10 +918,10 @@ tracks/4/path = NodePath("hitbox:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.033333335),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-97.57, 0)]
+"values": [Vector2(-52.37, 18.8)]
 }
 
 [sub_resource type="Animation" id="Animation_y4r1p"]
@@ -982,7 +985,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-15.605, -43.57)]
+"values": [Vector2(28.1, -28.415)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dt7fs"]
@@ -995,9 +998,10 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_smehm"]
-size = Vector2(59.235, 64.62875)
+size = Vector2(56, 43.41)
 
 [node name="player" type="CharacterBody2D" unique_id=1413294774]
+collision_mask = 3
 script = ExtResource("1_tuyoq")
 
 [node name="weaponpivot" type="Node2D" parent="." unique_id=2129643694]
@@ -1014,6 +1018,10 @@ animation = &"attak_down"
 frame = 3
 frame_progress = 1.0
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=9917425]
+position = Vector2(2.25, 16.5)
+shape = SubResource("RectangleShape2D_ur7pv")
+
 [node name="katana_sound" type="AudioStreamPlayer2D" parent="." unique_id=996043946]
 stream = ExtResource("7_fjrip")
 pitch_scale = 1.5
@@ -1023,9 +1031,9 @@ libraries/ = SubResource("AnimationLibrary_dt7fs")
 
 [node name="hitbox" type="Area2D" parent="." unique_id=413630673]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=1900543439]
-position = Vector2(47.2225, 14.095623)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=953634168]
 shape = SubResource("RectangleShape2D_smehm")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
