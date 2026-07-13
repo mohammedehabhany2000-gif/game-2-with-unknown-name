@@ -1010,6 +1010,7 @@ script = ExtResource("1_tuyoq")
 scale = Vector2(2.75, 2.75)
 sprite_frames = SubResource("SpriteFrames_ke2ow")
 animation = &"attak_up"
+frame = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=986653084]
 scale = Vector2(4, 4)
@@ -1039,8 +1040,8 @@ shape = SubResource("RectangleShape2D_smehm")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=2138622936]
 limit_left = 0
 limit_top = 0
-limit_right = 3520
-limit_bottom = 1216
+limit_right = 3648
+limit_bottom = 1408
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

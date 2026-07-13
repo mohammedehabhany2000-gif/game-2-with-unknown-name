@@ -98,5 +98,9 @@ func _on_player_animation_finished() -> void:
 
 
 func _on_hitbox_body_entered(body: CharacterBody2D) -> void:
-	if is_attaking and body.name == 'slime':
+	if is_attaking and body.name.begins_with("slime"):
+		body.take_damage(strength, position)
+	elif is_attaking and body.name.begins_with("redsquid"):
+		body.take_damage(strength, position)
+	elif is_attaking and body.name.begins_with("bamboo"):
 		body.take_damage(strength, position)
