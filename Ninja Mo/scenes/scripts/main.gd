@@ -1,7 +1,7 @@
 extends Node2D
 
 
-var level: int= 2
+var level: int= 1
 
 var current_level_root:Node =null
 

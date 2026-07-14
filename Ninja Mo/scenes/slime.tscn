@@ -169,6 +169,9 @@ size = Vector2(40, 30)
 [sub_resource type="CircleShape2D" id="CircleShape2D_371uh"]
 radius = 200.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pjw23"]
+size = Vector2(38, 32)
+
 [node name="slime" type="CharacterBody2D" unique_id=777005425]
 z_index = -1
 collision_layer = 2
@@ -198,6 +201,17 @@ pitch_scale = 0.75
 position = Vector2(-15, 15)
 scale = Vector2(1.7, 1.7)
 
+[node name="hitbox" type="Area2D" parent="." unique_id=631046041]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=1882705936]
+shape = SubResource("RectangleShape2D_pjw23")
+
+[node name="attaktimer" type="Timer" parent="." unique_id=278295549]
+wait_time = 1.5
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="sight" to="." method="_on_syte_body_entered"]
 [connection signal="body_exited" from="sight" to="." method="_on_syte_body_exited"]
+[connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="hitbox" to="." method="_on_hitbox_body_exited"]
+[connection signal="timeout" from="attaktimer" to="." method="_on_attaktimer_timeout"]

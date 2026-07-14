@@ -10,10 +10,14 @@ config_version=5
 
 [application]
 
-config/name="game 2"
+config/name="Ninja Mo"
 run/main_scene="uid://c6gom555qyb0j"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+playerstats="*uid://bc8j13e0xx7py"
 
 [display]
 

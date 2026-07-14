@@ -3,15 +3,17 @@ extends CharacterBody2D
 
 const SPEED = 300.0
 var last_direction: Vector2 = Vector2.RIGHT
-var is_attaking: bool = false
+var is_attaking: bool=false
 var hitbox_offset: Vector2
 var strength: int =20
 var knockback_velocity: Vector2 =Vector2.ZERO
 var min_x: float =150
 var max_x: float =3540
 var min_y: float = 170
-
 var max_y:float = 1280
+var max_health: int 
+var health:int 
+
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var katana_sound: AudioStreamPlayer2D = $katana_sound
@@ -22,6 +24,9 @@ var max_y:float = 1280
 
 
 func _ready() -> void:
+	health = playerstats.health
+	max_health = playerstats.max_health
+	
 	if katana:
 		katana.visible=false
 	hitbox_offset = Vector2(abs(hitbox.position.x),abs(hitbox.position.y))
@@ -43,20 +48,20 @@ func _physics_process(delta: float) -> void:
 		velocity=Vector2.ZERO
 		move_and_slide()
 		return
-	global_position.x = clamp(global_position.x, min_x, max_x)
+	global_position.x= clamp(global_position.x, min_x, max_x)
 	global_position.y = clamp(global_position.y, min_y, max_y)
 	process_movement()
 	process_animation()
 	move_and_slide()
 
 func process_movement()-> void:
-	var direction := Input.get_vector("left", "right", "up" ,"down")
+	var direction:=Input.get_vector("left", "right", "up" ,"down")
 	if direction != Vector2.ZERO:
 		velocity = direction * SPEED
 		last_direction = direction
 		
 	else:
-		velocity = Vector2.ZERO
+		velocity= Vector2.ZERO
 	
 	
 	
@@ -88,29 +93,30 @@ func attak() -> void:
 	is_attaking = true
 	hitbox.monitoring = true
 	katana_sound.play()  
-	play_animation('attak', last_direction)
+	play_animation('attak',last_direction)
 	
 
 	
-	if abs(last_direction.x) >= abs(last_direction.y):
+	if abs(last_direction.x) >=abs(last_direction.y):
 		if last_direction.x <= 0:
 			animation_player.play("attak_right")
 		else:
 			animation_player.play("attak_left")
 	else:
-		if last_direction.y >= 0:
+		if last_direction.y>= 0:
 			animation_player.play("attak_down1")
 		else:
+			
 			animation_player.play("attak_up")
 func _on_player_animation_finished() -> void:
 	if "attak" in animated_sprite_2d.animation:
 		is_attaking= false
 		if katana:
-			katana.visible = false 
+			katana.visible =false 
 	
 
 
-func _on_hitbox_body_entered(body: CharacterBody2D) -> void:
+func _on_hitbox_body_entered(body: CharacterBody2D)-> void:
 	if is_attaking and body.name.begins_with("slime"):
 		body.take_damage(strength, position)
 	elif is_attaking and body.name.begins_with("redsquid"):
@@ -118,8 +124,18 @@ func _on_hitbox_body_entered(body: CharacterBody2D) -> void:
 	elif is_attaking and body.name.begins_with("bamboo"):
 		body.take_damage(strength, position)
 	elif is_attaking and body.name.begins_with("redfrog"):
+		
 		body.take_damage(strength, position)
+		
+		
+	
 
 func apply_knockback(enemy_position: Vector2, force: float =600) -> void:
-	var puch_direction = (global_position - enemy_position).normalized()
+	var puch_direction =(global_position - enemy_position).normalized()
+	
 	knockback_velocity= puch_direction* force
+		
+func take_damage(amount: int) ->void:
+	health -= amount
+	playerstats.health = health
+	print(health)
