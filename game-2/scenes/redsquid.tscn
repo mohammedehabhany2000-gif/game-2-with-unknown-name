@@ -152,7 +152,6 @@ radius = 200.0
 [node name="redsquid" type="CharacterBody2D" unique_id=1761306166]
 scale = Vector2(2, 2)
 collision_layer = 2
-collision_mask = 0
 script = ExtResource("1_5wi0p")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=789512843]
@@ -176,5 +175,6 @@ stream = ExtResource("6_ivs37")
 position = Vector2(-16, 35.5)
 scale = Vector2(2, 2)
 
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="syte" to="." method="_on_syte_body_entered"]
 [connection signal="body_exited" from="syte" to="." method="_on_syte_body_exited"]

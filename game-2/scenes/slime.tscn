@@ -170,9 +170,9 @@ size = Vector2(40, 30)
 radius = 200.0
 
 [node name="slime" type="CharacterBody2D" unique_id=777005425]
+z_index = -1
 collision_layer = 2
-collision_mask = 0
-collision_priority = 10.0
+collision_mask = 2
 script = ExtResource("1_p2gj0")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=715281581]
@@ -198,5 +198,6 @@ pitch_scale = 0.75
 position = Vector2(-15, 15)
 scale = Vector2(1.7, 1.7)
 
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="sight" to="." method="_on_syte_body_entered"]
 [connection signal="body_exited" from="sight" to="." method="_on_syte_body_exited"]

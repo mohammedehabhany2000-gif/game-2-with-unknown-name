@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED:int = 100
+const SPEED:int = 130
 const Knockback_Force: int = 100
 
 
@@ -15,45 +15,46 @@ var is_alive: bool = true
 
 
 
-
-
-
 func _physics_process(delta: float) -> void:
 	if is_alive and target:
 		_attak(delta)
 
 
 
-func _attak(delta: float) -> void:
+func _attak(delta: float) ->void:
 	var direction = (target.position - position).normalized()
-	position += direction * SPEED * delta
+	position += direction * SPEED *delta
 	animated_sprite_2d.play("attak")
 
 
 
-		
 func take_damage(damage: int, attaker_position: Vector2) -> void:
 	health -= damage
 	health_bar.update_health(health)
-	if health <= 0:
+	if health <=0:
 		_die()
 	else:
 		takedamage.play()
-		var knockback_direction = (position - attaker_position).normalized()
-		var target_position = position + knockback_direction *Knockback_Force
-		var tween =create_tween()
+		var knockback_direction= (position- attaker_position).normalized()
+		var target_position = position + knockback_direction * Knockback_Force
+		var tween= create_tween()
 		tween.set_ease(Tween.EASE_OUT)
 		tween.set_trans(Tween.TRANS_CUBIC)
 		tween.tween_property(self, "position", target_position, 0.5)
 
 
-func _die() -> void:
+
+
+	
+func _die() ->void:
 	is_alive=false
 	animated_sprite_2d.play("die")
-	takedamage.pitch_scale = 0.5
+	takedamage.pitch_scale= 0.5
 	takedamage.play()
 	$CollisionShape2D.set_deferred("disabled",true)
-	$detection/CollisionShape2D.set_deferred("disabled", true)
+	$detection/CollisionShape2D.set_deferred("disabled",true)
+	
+
 func _on_detection_body_entered(body: Node2D) -> void:
 	if body.name== "player":
 		target = body
@@ -65,3 +66,8 @@ func _on_detection_body_exited(body: Node2D) -> void:
 	if body.name== "player" and is_alive:
 		target = null
 		animated_sprite_2d.play("idle")
+
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if $AnimatedSprite2D.animation == "die":
+		queue_free()

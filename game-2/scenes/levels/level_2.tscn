@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bjs2lu3xfsv2a" path="res://scenes/slime.tscn" id="2_ra442"]
 [ext_resource type="PackedScene" uid="uid://cj5umurl70fss" path="res://scenes/redsquid.tscn" id="3_ra442"]
 [ext_resource type="PackedScene" uid="uid://2joqh2hpdco1" path="res://scenes/bamboo.tscn" id="4_fiq81"]
+[ext_resource type="PackedScene" uid="uid://bfqoxvt75nia" path="res://scenes/redfrog.tscn" id="5_l37oo"]
 
 [node name="levelroot" unique_id=398412298 instance=ExtResource("1_g2h2n")]
 
@@ -23,7 +24,13 @@ position = Vector2(2358, 321)
 position = Vector2(2165, 947)
 
 [node name="redsquid" parent="." index="5" unique_id=1761306166 instance=ExtResource("3_ra442")]
+z_index = -1
 position = Vector2(1591, 1067)
 
 [node name="bamboo" parent="." index="6" unique_id=341464085 instance=ExtResource("4_fiq81")]
+z_index = -1
 position = Vector2(2993, 918)
+
+[node name="redfrog" parent="." index="7" unique_id=659037378 instance=ExtResource("5_l37oo")]
+z_index = -1
+position = Vector2(668.00006, 536.00006)

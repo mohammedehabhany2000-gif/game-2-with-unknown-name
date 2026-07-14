@@ -1001,7 +1001,8 @@ _data = {
 size = Vector2(86, 87)
 
 [node name="player" type="CharacterBody2D" unique_id=1413294774]
-collision_mask = 3
+collision_mask = 2
+safe_margin = 0.2
 script = ExtResource("1_tuyoq")
 
 [node name="weaponpivot" type="Node2D" parent="." unique_id=2129643694]

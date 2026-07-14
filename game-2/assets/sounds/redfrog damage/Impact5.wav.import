@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://j3t3ay5bq4f7"
+path="res://.godot/imported/Impact5.wav-b35d350a7a1d223e62e6af1d58c7a1ea.sample"
+
+[deps]
+
+source_file="res://assets/sounds/redfrog damage/Impact5.wav"
+dest_files=["res://.godot/imported/Impact5.wav-b35d350a7a1d223e62e6af1d58c7a1ea.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

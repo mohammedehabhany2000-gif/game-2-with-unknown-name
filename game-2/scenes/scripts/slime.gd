@@ -22,6 +22,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _attak(delta: float) -> void:
+	
 	var direction = (target.position - position).normalized()
 	position += direction * SPEED * delta
 	animated_sprite_2d.play("attak")
@@ -60,3 +61,8 @@ func _on_syte_body_exited(body: Node2D) -> void:
 	if body.name== "player" and is_alive:
 		target = null
 		animated_sprite_2d.play("idle")
+
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if $AnimatedSprite2D.animation == "die":
+		queue_free()

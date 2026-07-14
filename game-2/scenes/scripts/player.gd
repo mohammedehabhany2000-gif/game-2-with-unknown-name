@@ -6,6 +6,12 @@ var last_direction: Vector2 = Vector2.RIGHT
 var is_attaking: bool = false
 var hitbox_offset: Vector2
 var strength: int =20
+var knockback_velocity: Vector2 =Vector2.ZERO
+var min_x: float =150
+var max_x: float =3660
+var min_y: float = 150
+
+var max_y:float = 1280
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var katana_sound: AudioStreamPlayer2D = $katana_sound
@@ -22,16 +28,23 @@ func _ready() -> void:
 	if not animated_sprite_2d.animation_finished.is_connected(_on_player_animation_finished):
 		animated_sprite_2d.animation_finished.connect(_on_player_animation_finished)
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	
 	hitbox.monitoring = false
+	if knockback_velocity != Vector2.ZERO:
+		knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, 1500 * delta)
+		velocity = knockback_velocity
+		move_and_slide()
+		return
+	
 	if Input.is_action_just_pressed("attak") and not is_attaking:
 		attak()
 	if is_attaking:
 		velocity=Vector2.ZERO
 		move_and_slide()
 		return
-	
+	global_position.x = clamp(global_position.x, min_x, max_x)
+	global_position.y = clamp(global_position.y, min_y, max_y)
 	process_movement()
 	process_animation()
 	move_and_slide()
@@ -104,3 +117,9 @@ func _on_hitbox_body_entered(body: CharacterBody2D) -> void:
 		body.take_damage(strength, position)
 	elif is_attaking and body.name.begins_with("bamboo"):
 		body.take_damage(strength, position)
+	elif is_attaking and body.name.begins_with("redfrog"):
+		body.take_damage(strength, position)
+
+func apply_knockback(enemy_position: Vector2, force: float =600) -> void:
+	var puch_direction = (global_position - enemy_position).normalized()
+	knockback_velocity= puch_direction* force
