@@ -21,7 +21,7 @@
 
 ---
 * **Note: Don't kill enemies and move at the same time because you won't be able to damage them, and you will die faster.**
-
+* **Note: When you will kill enemies, there is a chance to get heal to increase your health.** 
 ---
 ## The used programs to make the Game:
 * **Godot Engine 4**: To make the game
