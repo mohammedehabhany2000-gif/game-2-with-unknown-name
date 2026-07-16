@@ -149,6 +149,9 @@ radius = 31.780497
 [sub_resource type="CircleShape2D" id="CircleShape2D_sgvlp"]
 radius = 200.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_5wi0p"]
+radius = 34.27098
+
 [node name="redsquid" type="CharacterBody2D" unique_id=1761306166]
 scale = Vector2(2, 2)
 collision_layer = 2
@@ -175,6 +178,18 @@ stream = ExtResource("6_ivs37")
 position = Vector2(-16, 35.5)
 scale = Vector2(2, 2)
 
+[node name="hitbox" type="Area2D" parent="." unique_id=477635162]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=1195610616]
+position = Vector2(0, 4)
+shape = SubResource("CircleShape2D_5wi0p")
+
+[node name="attaktimer" type="Timer" parent="." unique_id=2004727974]
+wait_time = 1.5
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="syte" to="." method="_on_syte_body_entered"]
 [connection signal="body_exited" from="syte" to="." method="_on_syte_body_exited"]
+[connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="hitbox" to="." method="_on_hitbox_body_exited"]
+[connection signal="timeout" from="attaktimer" to="." method="_on_attaktimer_timeout"]

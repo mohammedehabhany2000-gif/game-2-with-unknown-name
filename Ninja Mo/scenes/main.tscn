@@ -2,9 +2,12 @@
 
 [ext_resource type="Script" uid="uid://ctru5m755366i" path="res://scenes/scripts/main.gd" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://fb55y3r785o2" path="res://scenes/levels/base_level.tscn" id="1_sugp2"]
+[ext_resource type="PackedScene" uid="uid://ce44tpbetl08n" path="res://scenes/hud.tscn" id="3_sugp2"]
 
 [node name="main" type="Node2D" unique_id=838742788]
 script = ExtResource("1_0wfyh")
 
 [node name="levelroot" parent="." unique_id=398412298 instance=ExtResource("1_sugp2")]
 position = Vector2(56, 103)
+
+[node name="HUD" parent="." unique_id=1964472678 instance=ExtResource("3_sugp2")]

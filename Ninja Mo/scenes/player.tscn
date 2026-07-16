@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://vqpjp7f3dqqn" path="res://assets/images/player/Walk.png" id="5_4d7sh"]
 [ext_resource type="AudioStream" uid="uid://boap3rprdyk4q" path="res://assets/sounds/player/Slash.wav" id="7_fjrip"]
 [ext_resource type="Texture2D" uid="uid://b8fivdoryss6s" path="res://assets/images/player/Katana.png" id="8_smehm"]
+[ext_resource type="AudioStream" uid="uid://b135xsekhg55g" path="res://assets/sounds/player/player hurt.wav" id="9_ur7pv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
 atlas = ExtResource("8_smehm")
@@ -470,7 +471,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_1fr6y")
 }],
 "loop": false,
-"name": &"dead",
+"name": &"die",
 "speed": 3.0
 }, {
 "frames": [{
@@ -1016,9 +1017,7 @@ frame = 1
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=986653084]
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_lyuya")
-animation = &"attak_down"
-frame = 3
-frame_progress = 1.0
+animation = &"die"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=9917425]
 position = Vector2(2.25, 2.5)
@@ -1043,6 +1042,14 @@ limit_left = 0
 limit_top = 0
 limit_right = 3648
 limit_bottom = 1408
+
+[node name="takedamage" type="AudioStreamPlayer2D" parent="." unique_id=2067447436]
+stream = ExtResource("9_ur7pv")
+pitch_scale = 1.2
+
+[node name="damagecooldown" type="Timer" parent="." unique_id=1050228968]
+wait_time = 0.75
+one_shot = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

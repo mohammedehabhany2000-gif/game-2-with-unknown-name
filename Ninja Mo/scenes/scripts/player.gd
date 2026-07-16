@@ -1,5 +1,5 @@
 extends CharacterBody2D
-
+signal died
 
 const SPEED = 300.0
 var last_direction: Vector2 = Vector2.RIGHT
@@ -13,13 +13,15 @@ var min_y: float = 170
 var max_y:float = 1280
 var max_health: int 
 var health:int 
-
+var alive: bool = true
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var katana_sound: AudioStreamPlayer2D = $katana_sound
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var katana: AnimatedSprite2D = $weaponpivot/katana
 @onready var hitbox: Area2D = $hitbox
+@onready var takedamagesound: AudioStreamPlayer2D = $takedamage
+@onready var damagecooldown: Timer = $damagecooldown
 
 
 
@@ -36,23 +38,25 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	
 	hitbox.monitoring = false
-	if knockback_velocity != Vector2.ZERO:
-		knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, 1500 * delta)
-		velocity = knockback_velocity
-		move_and_slide()
-		return
 	
-	if Input.is_action_just_pressed("attak") and not is_attaking:
-		attak()
-	if is_attaking:
-		velocity=Vector2.ZERO
+	if alive:
+		if knockback_velocity != Vector2.ZERO:
+			knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, 1500 * delta)
+			velocity = knockback_velocity
+			move_and_slide()
+			return
+	
+		if Input.is_action_just_pressed("attak") and not is_attaking:
+			attak()
+		if is_attaking:
+			velocity=Vector2.ZERO
+			move_and_slide()
+			return
+		global_position.x= clamp(global_position.x, min_x, max_x)
+		global_position.y = clamp(global_position.y, min_y, max_y)
+		process_movement()
+		process_animation()
 		move_and_slide()
-		return
-	global_position.x= clamp(global_position.x, min_x, max_x)
-	global_position.y = clamp(global_position.y, min_y, max_y)
-	process_movement()
-	process_animation()
-	move_and_slide()
 
 func process_movement()-> void:
 	var direction:=Input.get_vector("left", "right", "up" ,"down")
@@ -136,6 +140,22 @@ func apply_knockback(enemy_position: Vector2, force: float =600) -> void:
 	knockback_velocity= puch_direction* force
 		
 func take_damage(amount: int) ->void:
-	health -= amount
-	playerstats.health = health
-	print(health)
+	
+	if alive:
+		if damagecooldown.time_left >0:
+			return
+		takedamagesound.play()
+		health -= amount
+		playerstats.health = health
+		print(health)
+		
+		if health <= 0:
+			die()
+		damagecooldown.start()
+
+
+func die() ->void:
+	animated_sprite_2d.play("die")
+	alive = false
+	await animated_sprite_2d.animation_finished
+	died.emit()

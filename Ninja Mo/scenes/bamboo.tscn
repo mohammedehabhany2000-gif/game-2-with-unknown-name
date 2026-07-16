@@ -136,6 +136,9 @@ size = Vector2(54, 53)
 [sub_resource type="CircleShape2D" id="CircleShape2D_35wk6"]
 radius = 200.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l6tit"]
+size = Vector2(58, 56.5)
+
 [node name="bamboo" type="CharacterBody2D" unique_id=341464085]
 scale = Vector2(2, 2)
 collision_layer = 2
@@ -162,6 +165,18 @@ stream = ExtResource("5_3gv85")
 position = Vector2(-17, 25)
 scale = Vector2(2, 2)
 
+[node name="hitbox" type="Area2D" parent="." unique_id=2017825715]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=1894040737]
+position = Vector2(-1, -0.75)
+shape = SubResource("RectangleShape2D_l6tit")
+
+[node name="attaktimer" type="Timer" parent="." unique_id=810390182]
+wait_time = 1.5
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="detection" to="." method="_on_detection_body_entered"]
 [connection signal="body_exited" from="detection" to="." method="_on_detection_body_exited"]
+[connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="hitbox" to="." method="_on_hitbox_body_exited"]
+[connection signal="timeout" from="attaktimer" to="." method="_on_attaktimer_timeout"]

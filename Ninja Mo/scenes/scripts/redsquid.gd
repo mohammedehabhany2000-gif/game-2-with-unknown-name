@@ -6,11 +6,16 @@ const Knockback_Force: int = 150
 
 var target = null
 var health: int = 100
+var strength: int =15
 var is_alive: bool = true
+var target_in_range : bool= false
+
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var takedamage: AudioStreamPlayer2D = $takedamage
 @onready var health_bar: Node2D = $healthBar
+@onready var attaktimer: Timer = $attaktimer
+
 
 
 
@@ -68,3 +73,22 @@ func _on_syte_body_exited(body: Node2D) -> void:
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if $AnimatedSprite2D.animation == "die":
 		queue_free()
+
+
+func _on_attaktimer_timeout() -> void:
+	if target and target_in_range:
+		target.take_damage(strength)
+
+
+func _on_hitbox_body_entered(body: Node2D) -> void:
+	if body.name == "player":
+		target_in_range= true
+		body.take_damage(strength)
+		attaktimer.start()
+
+
+func _on_hitbox_body_exited(body: Node2D) -> void:
+	if body.name == "player":
+		target_in_range= false
+		body.take_damage(strength)
+		attaktimer.stop()
