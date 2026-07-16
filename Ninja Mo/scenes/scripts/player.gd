@@ -1,5 +1,8 @@
 extends CharacterBody2D
+
 signal died
+signal health_changed(new_health: int)
+
 
 const SPEED = 300.0
 var last_direction: Vector2 = Vector2.RIGHT
@@ -8,7 +11,7 @@ var hitbox_offset: Vector2
 var strength: int =20
 var knockback_velocity: Vector2 =Vector2.ZERO
 var min_x: float =150
-var max_x: float =3540
+var max_x: float =3600
 var min_y: float = 170
 var max_y:float = 1280
 var max_health: int 
@@ -139,6 +142,17 @@ func apply_knockback(enemy_position: Vector2, force: float =600) -> void:
 	
 	knockback_velocity= puch_direction* force
 		
+
+func heal(amount: int) ->void:
+	health += amount
+	if health >= max_health:
+		health = max_health
+	playerstats.health = health
+	emit_signal("health_changed", health)
+
+
+
+
 func take_damage(amount: int) ->void:
 	
 	if alive:
@@ -147,7 +161,7 @@ func take_damage(amount: int) ->void:
 		takedamagesound.play()
 		health -= amount
 		playerstats.health = health
-		print(health)
+		emit_signal("health_changed", health)
 		
 		if health <= 0:
 			die()
@@ -159,3 +173,7 @@ func die() ->void:
 	alive = false
 	await animated_sprite_2d.animation_finished
 	died.emit()
+
+
+func _on_endinggame_body_entered(body: Node2D) -> void:
+	pass # Replace with function body.

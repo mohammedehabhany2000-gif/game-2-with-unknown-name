@@ -11,10 +11,11 @@ var level: int= 1
 var current_level_root:Node =null
 
 
-func _ready() -> void:
+
+	
+func _ready()-> void:
 	current_level_root= get_node("levelroot")
 	_load_level(level)
-	
 	
 	
 		
@@ -32,7 +33,9 @@ func _load_level(level_number: int)-> void:
 func _setup_level(level_root: Node) -> void:
 	
 	var player = level_root.get_node("player")
+	$HUD.set_player(player)
 	player.died.connect(_on_player_died)
+	
 	
 	var exit = level_root.get_node_or_null("exit")
 	

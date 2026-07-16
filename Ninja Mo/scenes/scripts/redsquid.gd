@@ -3,13 +3,13 @@ extends CharacterBody2D
 const SPEED:int = 175
 const Knockback_Force: int = 150
 
-
+const DROP_CHANGE: float = 0.5
 var target = null
 var health: int = 100
 var strength: int =15
 var is_alive: bool = true
 var target_in_range : bool= false
-
+var health_pickup_scene = preload("res://scenes/healthpickup.tscn") 
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var takedamage: AudioStreamPlayer2D = $takedamage
@@ -57,6 +57,11 @@ func _die() -> void:
 	takedamage.play()
 	$CollisionShape2D.set_deferred("disabled",true)
 	$syte/CollisionShape2D.set_deferred("disabled", true)
+	$hitbox/CollisionShape2D.set_deferred("disabled", true)
+	
+	if randf() <=  DROP_CHANGE:
+		drop_item()
+
 func _on_syte_body_entered(body: Node2D) -> void:
 	if body.name== "player":
 		target = body
@@ -92,3 +97,10 @@ func _on_hitbox_body_exited(body: Node2D) -> void:
 		target_in_range= false
 		body.take_damage(strength)
 		attaktimer.stop()
+		
+func drop_item():
+	var drop = health_pickup_scene.instantiate()
+	drop.position = position
+	var level_root = get_parent().get_parent()
+	var items_node = level_root.get_node("items")
+	items_node.call_deferred("add_child", drop)

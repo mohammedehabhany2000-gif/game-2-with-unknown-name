@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://vqpjp7f3dqqn" path="res://assets/images/player/Walk.png" id="5_4d7sh"]
 [ext_resource type="AudioStream" uid="uid://boap3rprdyk4q" path="res://assets/sounds/player/Slash.wav" id="7_fjrip"]
 [ext_resource type="Texture2D" uid="uid://b8fivdoryss6s" path="res://assets/images/player/Katana.png" id="8_smehm"]
-[ext_resource type="AudioStream" uid="uid://b135xsekhg55g" path="res://assets/sounds/player/player hurt.wav" id="9_ur7pv"]
+[ext_resource type="AudioStream" uid="uid://bued6j8ntg4on" path="res://assets/sounds/player/player hurt.wav" id="9_ur7pv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
 atlas = ExtResource("8_smehm")
@@ -999,7 +999,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_smehm"]
-size = Vector2(86, 87)
+size = Vector2(121, 116.215)
 
 [node name="player" type="CharacterBody2D" unique_id=1413294774]
 collision_mask = 2
@@ -1034,7 +1034,7 @@ libraries/ = SubResource("AnimationLibrary_dt7fs")
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=953634168]
-position = Vector2(17.369999, 6.7000027)
+position = Vector2(-9.6, -7.6924973)
 shape = SubResource("RectangleShape2D_smehm")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=2138622936]

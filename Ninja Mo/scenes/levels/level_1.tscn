@@ -34,4 +34,4 @@ position = Vector2(2304.0002, 944.0001)
 position = Vector2(3305.0005, 374.00003)
 
 [node name="exit" parent="." index="4" unique_id=2037370074]
-position = Vector2(3726, 922)
+position = Vector2(3660, 922)

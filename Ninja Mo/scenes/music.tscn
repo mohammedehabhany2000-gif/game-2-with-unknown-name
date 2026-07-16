@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cpmmqe5aqusum"]
+
+[ext_resource type="AudioStream" uid="uid://dri3e5j6h2uww" path="res://assets/sounds/background sound/background.ogg" id="1_05ggv"]
+
+[node name="music" type="AudioStreamPlayer2D" unique_id=1866690085]
+stream = ExtResource("1_05ggv")
+volume_db = -4.0
+autoplay = true
+max_distance = 10000.0
